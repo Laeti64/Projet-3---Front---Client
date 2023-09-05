@@ -7,7 +7,7 @@
  * This is especially useful for Docker builds.
  */
 
-!process.env.SKIP_ENV_VALIDATION && (await import("./config/server.mjs"));
+// !process.env.SKIP_ENV_VALIDATION && (await import("./config/server.mjs"));
 
 /** @type {import("next").NextConfig} */
 const config = {
@@ -33,8 +33,8 @@ const config = {
     return [
       {
         source: "/",
-        destination: process.env.NEXT_PUBLIC_HOMEPAGE_ID
-          ? `/pages/${process.env.NEXT_PUBLIC_HOMEPAGE_ID}/`
+        destination: process.env.HOMEPAGE_ID
+          ? `/pages/${process.env.HOMEPAGE_ID}/`
           : "/fr",
         permanent: false,
       },
