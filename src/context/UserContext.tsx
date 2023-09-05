@@ -27,6 +27,7 @@ type TUserContextProviderProps = {
 
 function UserContextProvider({ children }: TUserContextProviderProps) {
   const router = useRouter();
+
   const [authState, setAuthState] = useState<AuthState>({
     user: null,
     isAuth: false,
@@ -42,8 +43,9 @@ function UserContextProvider({ children }: TUserContextProviderProps) {
         isAuth: true,
         user: data,
       }));
-
-      router.push("/");
+      const cookie = `isAuth=true; path=/;`;
+      document.cookie = cookie;
+      router.push(`/pages/${process.env.NEXT_PUBLIC_HOMEPAGE_ID}`);
     } catch (error) {
       console.log(error);
     }
@@ -54,17 +56,23 @@ function UserContextProvider({ children }: TUserContextProviderProps) {
       isAuth: false,
       user: null,
     }));
-    router.push("/");
+    const cookie = `isAuth=false; path=/;`;
+    document.cookie = cookie;
+    router.push(`/pages/${process.env.NEXT_PUBLIC_HOMEPAGE_ID}`);
   };
 
   useEffect(() => {
     const checkAuth = async () => {
       try {
         const { data } = await axiosInstance.post("auth/me");
+
         setAuthState(() => ({
           isAuth: true,
           user: data,
         }));
+        const cookie = `isAuth=true; path=/;`;
+        document.cookie = cookie;
+        router.refresh();
       } catch (error) {
         console.log(error);
       }

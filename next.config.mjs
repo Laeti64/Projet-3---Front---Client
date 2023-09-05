@@ -33,8 +33,8 @@ const config = {
     return [
       {
         source: "/",
-        destination: process.env.HOMEPAGE_ID
-          ? `/pages/${process.env.HOMEPAGE_ID}/`
+        destination: process.env.NEXT_PUBLIC_HOMEPAGE_ID
+          ? `/pages/${process.env.NEXT_PUBLIC_HOMEPAGE_ID}/`
           : "/fr",
         permanent: false,
       },

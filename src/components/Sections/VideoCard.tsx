@@ -53,17 +53,7 @@ export default function VideoCard({
           <p>{video.title}</p>
         )}
 
-        {activeFavorite && isAuth ? <Favorite id={video.id} /> : ""}
-        {displayFavorite && favorite && isAuth ? (
-          <Image
-            src="/full_heart_logo.svg"
-            alt="logo share"
-            width="25"
-            height="25"
-          />
-        ) : (
-          ""
-        )}
+        {isAuth ? <Favorite id={video.id} /> : ""}
       </div>
     </>
   );
