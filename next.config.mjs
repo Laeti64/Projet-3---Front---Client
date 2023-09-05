@@ -16,7 +16,7 @@ const config = {
   },
   reactStrictMode: true,
   swcMinify: true,
-  trailingSlash: true,
+  trailingSlash: false,
   i18n: {
     locales: ["fr"],
     defaultLocale: "fr",
