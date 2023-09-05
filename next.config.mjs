@@ -9,6 +9,7 @@
 
 // !process.env.SKIP_ENV_VALIDATION && (await import("./config/server.mjs"));
 
+console.log("LOGIN HOMEPAGE ID", process.env.HOMEPAGE_ID);
 /** @type {import("next").NextConfig} */
 const config = {
   experimental: {
@@ -16,7 +17,7 @@ const config = {
   },
   reactStrictMode: true,
   swcMinify: true,
-  trailingSlash: true,
+  trailingSlash: false,
   i18n: {
     locales: ["fr"],
     defaultLocale: "fr",
