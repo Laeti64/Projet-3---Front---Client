@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
 import Image from "next/image";
-import { cookies } from "next/headers"; // Import cookies
+import { cookies } from "next/headers";
 import Favorite from "../../../src/components/Favorite";
 import ShareVideo from "../../../src/components/ShareVideo";
 
@@ -14,9 +15,9 @@ const getOneVideo = async (id: string) => {
 };
 
 export default async function VideoDetails({ params }: any) {
+  const cookieStore = cookies();
   const video = await getOneVideo(params.id);
-
-  const token = cookies().get("token");
+  const isAuth = cookieStore.get("isAuth");
   const changeDate = (dateISO: Date) => {
     const date = new Date(dateISO);
     return date.toLocaleDateString();
@@ -61,7 +62,7 @@ export default async function VideoDetails({ params }: any) {
             <div className="text-xl py-2 flex justify-between">
               {video.title}{" "}
               <div className="flex items-center">
-                {token ? <Favorite id={video.id} /> : <p />}
+                {isAuth?.value === "true" ? <Favorite id={video.id} /> : <p />}
                 <ShareVideo id={video.id} />
               </div>
             </div>
@@ -72,7 +73,7 @@ export default async function VideoDetails({ params }: any) {
               INFORMATIONS - published on {changeDate(video.updatedAt)}
             </div>
           </div>
-          {token || video.isPublic ? (
+          {isAuth?.value === "true" || video.isPublic ? (
             <div className="relative w-full md:w-1/2 p-4">
               <video key={video.id} src={video.videoUrl} controls>
                 {" "}
