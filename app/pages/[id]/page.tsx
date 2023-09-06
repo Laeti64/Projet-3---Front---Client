@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import axios from "axios";
 import CookiesConsent from "../../../src/components/CookiesConsent";
 import Ad from "../../../src/components/Sections/Ad";
 import CarouselDynamic from "../../../src/components/Sections/CarouselDynamic";
@@ -12,10 +13,9 @@ const getMultipleRandom = (arr: any[], num: number) => {
 };
 
 const getOnePage = async (id: string) => {
-  const res = await fetch(`${process.env.API_URL}/pages/${id}` || "apiurl", {
-    credentials: "include",
-  });
-  const pageJson = await res.json();
+  const res = await axios.get(`${process.env.API_URL}/pages/${id}`);
+
+  const pageJson = await res.data;
 
   return pageJson;
 };
@@ -34,7 +34,10 @@ const extractSections = (page: any) => {
 
 export default async function Page({ params }: any) {
   const page = await getOnePage(params.id);
+  console.log("params", params.id);
+  console.log("page", page);
   const sections = extractSections(page);
+  console.log("sections", sections);
   const url = `${process.env.NEXT_PUBLIC_PROD_URL}/pages/${params.id}`;
   const title = `Whatever You Watch - ${page.title}`;
 

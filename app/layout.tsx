@@ -1,6 +1,7 @@
 import React, { ReactNode } from "react";
 import "../styles/globals.css";
 import { cookies } from "next/headers"; // Import cookies
+import axios from "axios";
 import Navbar from "../src/components/Navbar";
 import Footer from "../src/components/Footer";
 import UserContextProvider from "../src/context/UserContext";
@@ -11,16 +12,13 @@ type Props = {
 
 const getAllPages = async () => {
   const token = cookies().get("token");
-  const pages = await fetch(
-    `${process.env.API_URL}/pages?display=true` || "apiurl",
-    {
-      credentials: "include",
-      headers: {
-        Authorization: token?.value as string,
-      },
-    }
-  );
-  const pagesJson = await pages.json();
+  const pages = await axios.get(`${process.env.API_URL}/pages?display=true`, {
+    headers: {
+      Authorization: token?.value as string,
+    },
+  });
+
+  const pagesJson = await pages.data;
 
   return pagesJson;
 };
