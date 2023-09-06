@@ -1,5 +1,6 @@
 import React, { ReactNode } from "react";
 import "../styles/globals.css";
+import { cookies } from "next/headers"; // Import cookies
 import axios from "axios";
 import Navbar from "../src/components/Navbar";
 import Footer from "../src/components/Footer";
@@ -10,7 +11,12 @@ type Props = {
 };
 
 const getAllPages = async () => {
-  const pages = await axios.get(`${process.env.API_URL}/pages?display=true`);
+  const token = cookies().get("token");
+  const pages = await axios.get(`${process.env.API_URL}/pages?display=true`, {
+    headers: {
+      Authorization: token?.value as string,
+    },
+  });
 
   const pagesJson = await pages.data;
 
